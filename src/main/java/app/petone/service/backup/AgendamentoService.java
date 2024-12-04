@@ -1,3 +1,5 @@
+/*
+
 package app.petone.service.backup;
 
 import app.petone.model.Agendamento;
@@ -57,9 +59,16 @@ public class AgendamentoService {
                 Procedimento procedimento = procedimentoRepository.findById(agendamento.getProcedimento().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Procedimento não encontrado"));
 
-         */
 
-        Procedimento procedimento = procedimentoRepository.findById(pId)
+
+import app.petone.model.Agendamento;
+import app.petone.model.Paciente;
+import app.petone.model.Procedimento;
+import jakarta.persistence.EntityNotFoundException;
+
+import java.time.LocalDateTime;
+
+Procedimento procedimento = procedimentoRepository.findById(pId)
                 .orElseThrow(() -> new EntityNotFoundException("Procedimento não encontrado"));
 
         Paciente paciente = pacienteRepository.findById(agendamento.getPaciente().getId())
@@ -75,7 +84,6 @@ public class AgendamentoService {
         return agendamentoRepository.save(agendamento);
     }
 
-    // Atualiza o status de aprovação do agendamento
     public Agendamento aprovarAgendamento(Long id, boolean aprovado, String emailVeterinario) {
         Agendamento agendamento = buscarPorId(id, emailVeterinario);
         agendamento.setAprovado(aprovado);
@@ -83,10 +91,10 @@ public class AgendamentoService {
         return agendamentoRepository.save(agendamento);
     }
 
-    // Remove um agendamento
     public void removerAgendamento(Long id, String emailVeterinario) {
         Agendamento agendamento = buscarPorId(id, emailVeterinario);
         agendamentoRepository.delete(agendamento);
     }
 }
 
+*/

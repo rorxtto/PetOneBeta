@@ -17,8 +17,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://192.168.56.14:8080/realms/petone
-          jwk-set-uri: http://192.168.56.14:8080/realms/petone/protocol/openid-connect/certs
+          issuer-uri: http://192.168.56.19:8080/realms/petone
+          jwk-set-uri: http://192.168.56.19:8080/realms/petone/protocol/openid-connect/certs
 
   oauth2:
     client:
@@ -29,8 +29,8 @@ spring:
           scope: openid profile email
       provider:
         keycloak:
-          authorization-uri: http://192.168.56.14:8080/realms/petone/protocol/openid-connect/auth
-          token-uri: http://192.168.56.14:8080/realms/petone/protocol/openid-connect/token
-          user-info-uri: http://192.168.56.14:8080/realms/petone/protocol/openid-connect/userinfo
-          jwk-set-uri: http://192.168.56.14:8080/realms/petone/protocol/openid-connect/certs
-          issuer-uri: http://192.168.56.14:8080/realms/petone
+          authorization-uri: http://192.168.56.19:8080/realms/petone/protocol/openid-connect/auth
+          token-uri: http://192.168.56.19:8080/realms/petone/protocol/openid-connect/token
+          user-info-uri: http://192.168.56.19:8080/realms/petone/protocol/openid-connect/userinfo
+          jwk-set-uri: http://192.168.56.19:8080/realms/petone/protocol/openid-connect/certs
+          issuer-uri: http://192.168.56.19:8080/realms/petone

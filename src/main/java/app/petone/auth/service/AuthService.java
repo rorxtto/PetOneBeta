@@ -29,17 +29,19 @@ public class AuthService {
     UserService userService;
 
     public AuxToken login(Login login) {
+        System.out.println(login.getUsername());
+        System.out.println(login.getPassword());
         OkHttpClient client = new OkHttpClient.Builder().build();
 
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
         String formattedBody = String.format(
-                "grant_type=password&client_id=petone&client_secret=90URn6CkWsS2ctgvpssIjSPc2ell3A7q&username=%s&password=%s",
+                "grant_type=password&client_id=petone&client_secret=YU1ySSxRqKYyK1ni1yraZogW3UfglG4I&username=%s&password=%s",
                 login.getUsername(),
                 login.getPassword()
         );
         RequestBody body = RequestBody.create(mediaType, formattedBody);
         Request request = new Request.Builder()
-                .url("http://192.168.56.14:8080/realms/petone/protocol/openid-connect/token")
+                .url("http://192.168.56.19:8080/realms/petone/protocol/openid-connect/token")
                 .method("POST", body)
                 .addHeader("Content-Type", "application/x-www-form-urlencoded")
                 .build();
