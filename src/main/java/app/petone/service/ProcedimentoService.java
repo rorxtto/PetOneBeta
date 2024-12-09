@@ -1,8 +1,10 @@
 package app.petone.service;
 
+import app.petone.auth.service.AuthService;
 import app.petone.model.Procedimento;
 import app.petone.repository.ProcedimentoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,12 @@ import java.util.List;
 public class ProcedimentoService {
     @Autowired
     private ProcedimentoRepository procedimentoRepository;
+
+    @Autowired
+    private LogService logService;
+
+    @Autowired
+    private AuthService authService;
 
     // Lista todos os procedimentos
     public List<Procedimento> listarTodos() {
@@ -29,6 +37,7 @@ public class ProcedimentoService {
     public Procedimento criarProcedimento(Procedimento procedimento) {
         procedimento.setDataCriacao(LocalDateTime.now());
         procedimento.setDataAtualizacao(LocalDateTime.now());
+        this.logService.Created("paciente", procedimento.getNome(), authService.getEmailFromToken());
         return procedimentoRepository.save(procedimento);
     }
 
@@ -38,13 +47,14 @@ public class ProcedimentoService {
 
         procedimento.setNome(procedimentoAtualizado.getNome());
         procedimento.setDataAtualizacao(LocalDateTime.now());
-
+        this.logService.Updated("paciente", procedimento.getNome(), authService.getEmailFromToken());
         return procedimentoRepository.save(procedimento);
     }
 
     // Remove um procedimento
     public void removerProcedimento(Long id) {
         Procedimento procedimento = buscarPorId(id);
+        this.logService.Deleted("paciente", procedimento.getNome(), authService.getEmailFromToken());
         procedimentoRepository.delete(procedimento);
     }
 }

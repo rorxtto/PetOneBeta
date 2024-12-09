@@ -36,6 +36,9 @@ public class AgendamentoService {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private LogService logService;
+
     // Método privado para buscar a entidade Agendamento sem retornar DTO
     private Agendamento buscarAgendamentoPorId(Long id, String emailVeterinario) {
         return agendamentoRepository.findByIdAndVeterinario_Email(id, emailVeterinario)
@@ -91,6 +94,8 @@ public class AgendamentoService {
         Agendamento savedAgendamento = agendamentoRepository.save(agendamento);
         System.out.println(savedAgendamento.getStatus());
         // Retorna o DTO do agendamento salvo
+
+        this.logService.Created("paciente", paciente.getNome(), authService.getEmailFromToken());
         return AgendamentoMapper.toDTO(savedAgendamento);
     }
 
@@ -106,8 +111,8 @@ public class AgendamentoService {
     }
 
     // Remove um agendamento
-    public void removerAgendamento(Long id, String emailVeterinario) {
-        Agendamento agendamento = buscarAgendamentoPorId(id, emailVeterinario);
-        agendamentoRepository.delete(agendamento);
+    public void removerAgendamento(Long id) {
+        this.logService.Deleted("paciente", this.pacienteRepository.findById(id).get().getNome(), authService.getEmailFromToken());
+        agendamentoRepository.deleteById(id);
     }
 }

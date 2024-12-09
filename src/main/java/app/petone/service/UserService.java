@@ -1,6 +1,7 @@
 package app.petone.service;
 
 import app.petone.auth.model.TokenDTO;
+import app.petone.auth.service.AuthService;
 import app.petone.model.Tutor;
 import app.petone.repository.TutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,12 @@ public class UserService {
 
     @Autowired
     private TutorRepository userRepository;
+
+    @Autowired
+    private AuthService authService;
+
+    @Autowired
+    private LogService logService;
 
     public Optional<Tutor> getUserByEmail(String email) {
         if (email != null && !email.isEmpty()) {
@@ -36,7 +43,7 @@ public class UserService {
             newUser.setFirstName(auxtoken.getGivenName());
             newUser.setLastName(auxtoken.getFamilyName());
             newUser.setRole("USER");
-
+            this.logService.Created("user", newUser.getUsername(), authService.getEmailFromToken());
             this.userRepository.save(newUser); // Salvar no banco
             System.out.println("Novo usuario: " + auxtoken.getEmail());
         }

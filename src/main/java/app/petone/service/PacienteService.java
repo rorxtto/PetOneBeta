@@ -8,6 +8,7 @@ import app.petone.model.Tutor;
 import app.petone.repository.PacienteRepository;
 import app.petone.repository.TutorRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,9 @@ public class PacienteService {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private LogService logService;
 
     public List<PacienteDTO> getAllPacientes() {
         String email = authService.getEmailFromToken();
@@ -59,6 +63,7 @@ public class PacienteService {
         pacienteRepository.save(paciente);
 
         // Retorna o DTO após salvar
+        this.logService.Created("paciente", paciente.getNome(), authService.getEmailFromToken());
         return PacienteMapper.toDTO(paciente);
     }
 
@@ -80,6 +85,7 @@ public class PacienteService {
             pacienteRepository.save(paciente);
 
             // Retorna o DTO após salvar
+            this.logService.Updated("paciente", paciente.getNome(), authService.getEmailFromToken());
             return PacienteMapper.toDTO(paciente);
         }
         return null;  // Retorna null ou você pode lançar uma exceção caso o paciente não exista
@@ -94,7 +100,7 @@ public class PacienteService {
         Paciente paciente = pacienteRepository.findByIdAndTutor(pacienteId, tutor)
                 .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado ou não pertence ao tutor"));
 
-
+        this.logService.Deleted("paciente", paciente.getNome(), authService.getEmailFromToken());
         pacienteRepository.delete(paciente);
     }
 }

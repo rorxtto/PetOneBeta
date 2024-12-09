@@ -37,6 +37,7 @@ public class AgendamentoController {
             @PathVariable Long veterinarioId,
             @PathVariable Long procedimentoId,
             @PathVariable Long pacienteId) {
+        System.out.println(agendamento.getDescricao());
         return agendamentoService.criarAgendamento(agendamento, veterinarioId, procedimentoId, pacienteId);
     }
 
@@ -48,7 +49,7 @@ public class AgendamentoController {
     }
 
     @DeleteMapping("/{id}")
-    public void removerAgendamento(@PathVariable Long id, @RequestHeader String emailVeterinario) {
-        agendamentoService.removerAgendamento(id, emailVeterinario);
+    public void removerAgendamento(@PathVariable Long id) {
+        agendamentoService.removerAgendamento(id);
     }
 }
