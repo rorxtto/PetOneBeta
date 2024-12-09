@@ -37,7 +37,7 @@ public class ProcedimentoService {
     public Procedimento criarProcedimento(Procedimento procedimento) {
         procedimento.setDataCriacao(LocalDateTime.now());
         procedimento.setDataAtualizacao(LocalDateTime.now());
-        this.logService.Created("paciente", procedimento.getNome(), authService.getEmailFromToken());
+        this.logService.Created("procedimento", procedimento.getNome(), authService.getEmailFromToken());
         return procedimentoRepository.save(procedimento);
     }
 
@@ -47,14 +47,14 @@ public class ProcedimentoService {
 
         procedimento.setNome(procedimentoAtualizado.getNome());
         procedimento.setDataAtualizacao(LocalDateTime.now());
-        this.logService.Updated("paciente", procedimento.getNome(), authService.getEmailFromToken());
+        this.logService.Updated("procedimento", procedimento.getNome(), authService.getEmailFromToken());
         return procedimentoRepository.save(procedimento);
     }
 
     // Remove um procedimento
     public void removerProcedimento(Long id) {
         Procedimento procedimento = buscarPorId(id);
-        this.logService.Deleted("paciente", procedimento.getNome(), authService.getEmailFromToken());
+        this.logService.Deleted("procedimento", procedimento.getNome(), authService.getEmailFromToken());
         procedimentoRepository.delete(procedimento);
     }
 }
