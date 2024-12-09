@@ -12,7 +12,8 @@ public class AgendamentoMapper {
         dto.setAprovado(agendamento.getAprovado());
         dto.setDataCriacao(agendamento.getDataCriacao());
         dto.setDataAtualizacao(agendamento.getDataAtualizacao());
-
+        dto.setStatus(agendamento.getStatus());
+        dto.setDescricao(agendamento.getDescricao());
         // Mapear apenas IDs para evitar recursão
         if (agendamento.getPaciente() != null) {
             dto.setPacienteId(agendamento.getPaciente().getId());

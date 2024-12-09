@@ -20,7 +20,7 @@ public class Veterinario {
     private String nome;
     private String cpf;
     private String email;
-    private String crm;
+    private String crmv;
 
     @CreationTimestamp
     private LocalDateTime dataCadastro;

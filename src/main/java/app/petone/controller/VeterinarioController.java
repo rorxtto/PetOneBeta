@@ -1,5 +1,6 @@
 package app.petone.controller;
 
+import app.petone.DTO.v2.DTOs.VeterinarioDTO;
 import app.petone.auth.service.AuthService;
 import app.petone.model.Veterinario;
 import app.petone.service.VeterinarioService;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/veterinarios")
 public class VeterinarioController {
@@ -19,35 +19,33 @@ public class VeterinarioController {
     private VeterinarioService veterinarioService;
 
     @Autowired
-    private AuthService authService; // Para extrair o email do token
+    private AuthService authService;
 
     // Lista todos os veterinários
     @GetMapping
-    public ResponseEntity<List<Veterinario>> listarTodos() {
-        List<Veterinario> veterinarios = veterinarioService.listarTodos();
+    public ResponseEntity<List<VeterinarioDTO>> listarTodos() {
+        List<VeterinarioDTO> veterinarios = veterinarioService.listarTodos();
         return ResponseEntity.ok(veterinarios);
     }
 
     // Busca um veterinário por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Veterinario> buscarPorId(@PathVariable Long id) {
-        Veterinario veterinario = veterinarioService.buscarPorId(id);
-        return ResponseEntity.ok(veterinario);
+    public ResponseEntity<VeterinarioDTO> buscarPorId(@PathVariable Long id) {
+        VeterinarioDTO veterinario = veterinarioService.buscarPorId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(veterinario);
     }
 
     // Cria um novo veterinário
     @PostMapping
-    public ResponseEntity<Veterinario> criarVeterinario(@RequestBody Veterinario veterinario) {
-        Veterinario novoVeterinario = veterinarioService.criarVeterinario(veterinario);
+    public ResponseEntity<VeterinarioDTO> criarVeterinario(@RequestBody Veterinario veterinario) {
+        VeterinarioDTO novoVeterinario = veterinarioService.criarVeterinario(veterinario);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoVeterinario);
     }
 
     // Atualiza os dados de um veterinário
     @PutMapping("/{id}")
-    public ResponseEntity<Veterinario> atualizarVeterinario(
-            @PathVariable Long id,
-            @RequestBody Veterinario dadosAtualizados) {
-        Veterinario veterinarioAtualizado = veterinarioService.atualizarVeterinario(id, dadosAtualizados);
+    public ResponseEntity<VeterinarioDTO> atualizarVeterinario(@PathVariable Long id, @RequestBody Veterinario dadosAtualizados) {
+        VeterinarioDTO veterinarioAtualizado = veterinarioService.atualizarVeterinario(id, dadosAtualizados);
         return ResponseEntity.ok(veterinarioAtualizado);
     }
 
@@ -58,12 +56,11 @@ public class VeterinarioController {
         return ResponseEntity.noContent().build();
     }
 
-    // Busca o veterinário logado (com base no JWT)
+    // Busca o veterinário logado
     @GetMapping("/me")
-    public ResponseEntity<Veterinario> buscarVeterinarioLogado() {
+    public ResponseEntity<VeterinarioDTO> buscarVeterinarioLogado() {
         String email = authService.getEmailFromToken();
-        Veterinario veterinario = veterinarioService.buscarVeterinarioLogado(email);
+        VeterinarioDTO veterinario = veterinarioService.buscarVeterinarioLogado(email);
         return ResponseEntity.ok(veterinario);
     }
 }
-

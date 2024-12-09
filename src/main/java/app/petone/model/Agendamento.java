@@ -26,6 +26,8 @@ public class Agendamento {
     @ManyToOne
     private Veterinario veterinario;
 
+    private String descricao;
+
     @ManyToOne
     private Paciente paciente;
 
@@ -34,6 +36,8 @@ public class Agendamento {
 
     @UpdateTimestamp
     private LocalDateTime dataAtualizacao;
+
+    private String status;
 
     private Boolean aprovado = false; // Status do agendamento
 }

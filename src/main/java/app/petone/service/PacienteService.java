@@ -50,13 +50,16 @@ public class PacienteService {
     }
 
     // Adiciona um novo paciente para o Tutor autenticado
-    public Paciente adicionarPaciente(String token, Paciente paciente) {
+    public PacienteDTO adicionarPaciente(String token, Paciente paciente) {
         String email = authService.getEmailFromToken();
         Tutor tutor = tutorRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Tutor não encontrado"));
 
         paciente.setTutor(tutor); // Vincula o paciente ao Tutor
-        return pacienteRepository.save(paciente);
+        pacienteRepository.save(paciente);
+
+        // Retorna o DTO após salvar
+        return PacienteMapper.toDTO(paciente);
     }
 
     // Atualiza informações de um paciente do Tutor autenticado
@@ -90,6 +93,7 @@ public class PacienteService {
 
         Paciente paciente = pacienteRepository.findByIdAndTutor(pacienteId, tutor)
                 .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado ou não pertence ao tutor"));
+
 
         pacienteRepository.delete(paciente);
     }

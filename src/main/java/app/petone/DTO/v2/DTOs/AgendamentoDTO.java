@@ -15,6 +15,7 @@ public class AgendamentoDTO {
     private Long pacienteId;  // Apenas o ID do paciente
     private Long veterinarioId;  // Apenas o ID do veterinário
     private Long procedimentoId;  // Apenas o ID do procedimento
+    private String status;
     private boolean aprovado;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataAtualizacao;

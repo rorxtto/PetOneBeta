@@ -37,12 +37,12 @@ public class PacienteController {
      */
 
     @PostMapping
-    public ResponseEntity<String> adicionarPaciente(
+    public ResponseEntity<PacienteDTO> adicionarPaciente(
             @RequestBody Paciente paciente,
             @RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.replace("Bearer ", "");
-        Paciente pacienteCriado = pacienteService.adicionarPaciente(token, paciente);
-        return ResponseEntity.status(HttpStatus.CREATED).body("CRIADO!");
+        PacienteDTO pacienteCriado = pacienteService.adicionarPaciente(token, paciente);
+        return ResponseEntity.ok(pacienteCriado);
     }
 
     @PutMapping("/{id}")

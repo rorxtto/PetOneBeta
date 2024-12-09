@@ -26,16 +26,20 @@ public class AgendamentoController {
     }
 
 
-    @GetMapping("/tutor/{emailVeterinario}")
-    public List<AgendamentoDTO> listarPorTutor(@PathVariable String emailVeterinario) {
-        return agendamentoService.listarPorTutor(emailVeterinario);
+    @GetMapping("/tutor")
+    public List<AgendamentoDTO> listarPorTutor() {
+        return agendamentoService.listarPorTutor();
     }
 
-    @PostMapping
-    public AgendamentoDTO criarAgendamento(@RequestBody Agendamento agendamento, @RequestHeader String emailVeterinario,
-                                           @RequestParam Long veterinarioId, @RequestParam Long procedimentoId) {
-        return agendamentoService.criarAgendamento(agendamento, emailVeterinario, veterinarioId, procedimentoId);
+    @PostMapping("/{veterinarioId}/{procedimentoId}/{pacienteId}")
+    public AgendamentoDTO criarAgendamento(
+            @RequestBody Agendamento agendamento,
+            @PathVariable Long veterinarioId,
+            @PathVariable Long procedimentoId,
+            @PathVariable Long pacienteId) {
+        return agendamentoService.criarAgendamento(agendamento, veterinarioId, procedimentoId, pacienteId);
     }
+
 
     @PutMapping("/{id}")
     public AgendamentoDTO aprovarAgendamento(@PathVariable Long id, @RequestParam boolean aprovado,

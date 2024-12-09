@@ -24,6 +24,7 @@ public class TutorController {
     // Retorna o perfil do tutor logado
     @GetMapping("/me")
     public ResponseEntity<TutorDTO> buscarPerfilCompleto() {
+        System.out.println("k");
         String email = authService.getEmailFromToken();
         Tutor tutor = tutorService.buscarPerfilCompleto(email);
         TutorDTO tutorDTO = new TutorDTO(tutor); // Converter para DTO para evitar recursão infinita
